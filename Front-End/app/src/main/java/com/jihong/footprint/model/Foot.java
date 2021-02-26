@@ -3,6 +3,7 @@ package com.jihong.footprint.model;
 public class Foot {
     private String addr1;
     private String contentid;
+    private String contenttypeid;
     private String dist;
     private String firstimage;
     private String mapx;
@@ -12,9 +13,10 @@ public class Foot {
     public Foot() {
     }
 
-    public Foot(String addr1, String contentid, String dist, String firstimage, String mapx, String mapy, String title) {
+    public Foot(String addr1, String contentid, String contenttypeid, String dist, String firstimage, String mapx, String mapy, String title) {
         this.addr1 = addr1;
         this.contentid = contentid;
+        this.contenttypeid = contenttypeid;
         this.dist = dist;
         this.firstimage = firstimage;
         this.mapx = mapx;
@@ -38,6 +40,15 @@ public class Foot {
 
     public void setContentid(String contentid) {
         this.contentid = contentid;
+    }
+
+    // contenttypeid
+    public String getContenttypeid() {
+        return contenttypeid;
+    }
+
+    public void setContenttypeid(String contenttypeid) {
+        this.contenttypeid = contenttypeid;
     }
 
     // dist

@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
                     String addr1 = "";
                     String contentid = "";
+                    String contenttypeid = "";
                     String dist = "";
                     String firstimage = "";
                     String mapx = "";
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         addr1 = jsonObject.getString("addr1");
                         contentid = jsonObject.getString("contentid");
+                        contenttypeid = jsonObject.getString("contenttypeid");
                         dist = jsonObject.getString("dist");
                         firstimage = jsonObject.getString("firstimage");
                         mapx = jsonObject.getString("mapx");
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         Foot foot = new Foot();
                         foot.setAddr1(addr1);
                         foot.setContentid(contentid);
+                        foot.setContenttypeid(contenttypeid);
                         foot.setDist(dist);
                         foot.setFirstimage(firstimage);
                         foot.setMapx(mapx);

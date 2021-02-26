@@ -53,6 +53,21 @@ public class FootAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         holder.title.setText(footItems.get(position).getTitle());
 
+        if (footItems.get(position).getContenttypeid().equals("12")) {
+            holder.text_content_type.setText("관광지");
+        } else if (footItems.get(position).getContenttypeid().equals("14")) {
+            holder.text_content_type.setText("문화시설");
+        } else if (footItems.get(position).getContenttypeid().equals("15")) {
+            holder.text_content_type.setText("행사");
+        } else if (footItems.get(position).getContenttypeid().equals("25")) {
+            holder.text_content_type.setText("여행코스");
+        } else if (footItems.get(position).getContenttypeid().equals("32")) {
+            holder.text_content_type.setText("숙박");
+        } else if (footItems.get(position).getContenttypeid().equals("39")) {
+            holder.text_content_type.setText("음식점");
+        } else {
+            holder.text_content_type.setText("기타");
+        }
     }
 
     @Override
@@ -63,12 +78,14 @@ public class FootAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 class ViewHolder extends RecyclerView.ViewHolder {
     TextView title;
+    TextView text_content_type;
     ImageView thumbnail;
 
     public ViewHolder(@NonNull View convertView, ArrayList<Foot> footItems) {
         super(convertView);
 
         title = convertView.findViewById(R.id.text_title);
+        text_content_type = convertView.findViewById(R.id.text_content_type);
         thumbnail = convertView.findViewById(R.id.img_thumbnail);
 
         convertView.setOnClickListener(v -> {
