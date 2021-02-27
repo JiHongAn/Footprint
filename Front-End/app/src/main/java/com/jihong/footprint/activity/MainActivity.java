@@ -1,7 +1,12 @@
 package com.jihong.footprint.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +18,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.jihong.footprint.R;
 import com.jihong.footprint.adapter.FootAdapter;
+import com.jihong.footprint.helper.GetMyLocation;
+import com.jihong.footprint.helper.PreferenceHelper;
 import com.jihong.footprint.model.Foot;
 
 import org.json.JSONArray;
@@ -29,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Foot> footList = new ArrayList<Foot>();
     private RecyclerView recyclerView;
     private FootAdapter adapter;
+    ProgressBar progress;
+
+    // 프리퍼런스
+    PreferenceHelper preferenceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +51,33 @@ public class MainActivity extends AppCompatActivity {
 
         // recyclerView
         recyclerView = findViewById(R.id.recyclerView);
+        progress = findViewById(R.id.progress);
         adapter = new FootAdapter(this, footList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        recyclerView.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+
+        // 프리퍼런스 가져오기
+        preferenceHelper = new PreferenceHelper();
+        String mapx = preferenceHelper.preferenceRead(this, "mapx");
+        String mapy = preferenceHelper.preferenceRead(this, "mapy");
+
+        // 만약 비어있으면
+        if (mapx.equals("") || mapy.equals("")) {
+            // 기본 위치 서울시청으로 이동한다.
+            mapx = "126.9757564";
+            mapy = "37.5662952";
+        }
 
         // 여행지 정보를 받아올 url
-        String mapX = "126.981";
-        String mapY = "37.568";
-        String url = getString(R.string.rest_url) + "/get-around.php?mapX=" + mapX + "&mapY=" + mapY;
+        String url = getString(R.string.rest_url) + "/get-around.php?mapX=" + mapx + "&mapY=" + mapy;
 
         // data 파싱
         getData(url);
@@ -110,5 +140,33 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }, error -> Log.e("Error", error.toString()));
         requestQueue.add(jsonObjectRequest);
+
+
+        new Handler().postDelayed(() -> {
+            recyclerView.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.GONE);
+        }, 700);
+    }
+
+    // 내 위치 가져오기
+    public void onMyLocation(View view) {
+        recyclerView.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+
+        // 내 위치 좌표 가져오기
+        GetMyLocation getMyLocation = new GetMyLocation(this);
+        String mapx = String.valueOf(getMyLocation.getLongitude());
+        String mapy = String.valueOf(getMyLocation.getLatitude());
+
+        // 프리퍼런스 저장
+        preferenceHelper.preferenceWrite(this, "mapx", mapx);
+        preferenceHelper.preferenceWrite(this, "mapy", mapy);
+        getMyLocation.stopUsingGPS();
+
+        // 여행지 정보를 받아올 url
+        String url = getString(R.string.rest_url) + "/get-around.php?mapX=" + mapx + "&mapY=" + mapy;
+
+        // data 파싱
+        getData(url);
     }
 }
