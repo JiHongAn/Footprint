@@ -1,13 +1,19 @@
 package com.jihong.footprint.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     // 프리퍼런스
     PreferenceHelper preferenceHelper;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FootAdapter(this, footList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        // 탭 설정
+        ImageView homeImage = findViewById(R.id.homeImage);
+        TextView lineHome = findViewById(R.id.lineHome);
+
+        homeImage.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7CB3F9")));
+        lineHome.setBackgroundColor(Color.parseColor("#7CB3F9"));
     }
 
     @Override
@@ -168,5 +182,25 @@ public class MainActivity extends AppCompatActivity {
 
         // data 파싱
         getData(url);
+    }
+
+    // 지도 액티비티 이동
+    public void tabMap(View view) {
+        startActivity(new Intent(MainActivity.this, MapActivity.class));
+        overridePendingTransition(0, 0);
+        finish();
+    }
+
+    // 두번 눌러 종료
+    private long time = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - time >= 2000) {
+            time = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(), "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        } else if (System.currentTimeMillis() - time < 2000) {
+            finish();
+        }
     }
 }
