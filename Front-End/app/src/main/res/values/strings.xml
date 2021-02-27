@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Footprint</string>
+    <string name="app_name">발자국</string>
     <string name="rest_url">http://192.168.0.12:8888</string>
 </resources>
