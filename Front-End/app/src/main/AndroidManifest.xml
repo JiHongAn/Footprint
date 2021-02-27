@@ -28,7 +28,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/Theme.Footprint.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,10 +38,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DetailActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/Theme.Footprint.NoActionBar" />
 
         <activity android:name=".activity.MapActivity" />
+
+        <activity
+            android:name=".activity.DetailActivity"
+            android:theme="@style/Theme.Footprint.NoActionBar" />
+
+        <activity android:name=".activity.BiggerMapActivity" />
 
         <activity android:name=".activity.PickActivity" />
     </application>
