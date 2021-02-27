@@ -228,7 +228,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         String mapy = getIntent().getStringExtra("mapy");
 
         // 액티비티 이동
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, BiggerMapActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("mapx", mapx);
         intent.putExtra("mapy", mapy);
