@@ -98,5 +98,6 @@ public class PickActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPick(View view) {
         preferenceHelper.preferenceWrite(this, "mapx", changeMapX);
         preferenceHelper.preferenceWrite(this, "mapy", changeMapY);
+        finish();
     }
 }
