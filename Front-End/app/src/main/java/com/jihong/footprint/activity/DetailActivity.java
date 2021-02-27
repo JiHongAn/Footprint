@@ -1,6 +1,8 @@
 package com.jihong.footprint.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
@@ -207,6 +210,13 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(position);
         markerOptions.title(title);
+
+        // 커스텀 지도 핀
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_marker);
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 120, 120, false);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
     }
