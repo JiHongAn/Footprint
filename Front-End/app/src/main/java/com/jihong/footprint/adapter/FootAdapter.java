@@ -95,6 +95,8 @@ class ViewHolder extends RecyclerView.ViewHolder {
             intent.putExtra("title", footItems.get(position).getTitle());
             intent.putExtra("coverImage", footItems.get(position).getFirstimage());
             intent.putExtra("contentid", footItems.get(position).getContentid());
+            intent.putExtra("mapx", footItems.get(position).getMapx());
+            intent.putExtra("mapy", footItems.get(position).getMapy());
             v.getContext().startActivity(intent);
         });
     }
