@@ -1,6 +1,13 @@
 # 발자국
 내 주변 여행지와 맛집을 보여줍니다<br/>
 
+
+## React Native
+https://github.com/JiHongAn/Footprint-React-Native
+
+## Kotlin
+https://github.com/JiHongAn/Footprint-Kotlin
+
 ## 사용 APIs
 * 한국관광공사 국문 관광정보 API
 * Google Map API
